@@ -1,0 +1,295 @@
+.form-card {
+  background: #fff;
+  border: 1px solid #d5d6d2;
+  border-radius: 14px;
+  padding: 26px;
+}
+
+.form-card h2 {
+  margin: 0 0 18px;
+  font-size: 28px;
+}
+
+.form-card--respond > span,
+.form-kicker {
+  display: block;
+  margin: 0 0 8px;
+  color: #494b46;
+  font-weight: 700;
+}
+
+.form-card form {
+  display: grid;
+  gap: 14px;
+}
+
+.form-card label {
+  display: grid;
+  gap: 8px;
+  font-weight: 800;
+  color: #242520;
+}
+
+.form-card input,
+.form-card textarea {
+  width: 100%;
+  border: 1px solid #c9cbc5;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #fffefa;
+}
+
+.form-error {
+  min-height: 24px;
+  margin: 0;
+  color: #9a2925;
+  font-weight: 700;
+}
+
+.rating-input {
+  border: 1px solid #d5d6d2;
+  border-radius: 12px;
+  margin: 12px 0 0;
+  padding: 12px 14px 10px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rating-input legend {
+  width: auto;
+  margin-left: 4px;
+  padding: 0 8px;
+  font-weight: 800;
+}
+
+.rating-input label {
+  display: block;
+  min-width: 0;
+}
+
+.rating-input input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.rating-option {
+  display: grid;
+  gap: 8px;
+  place-items: center;
+  min-height: 104px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--mood-color);
+  font-weight: 900;
+  padding: 8px 2px;
+  text-align: center;
+}
+
+.rating-input input:checked + .rating-option {
+  color: var(--mood-color);
+}
+
+.rating-input input:focus-visible + .rating-option .mood-face {
+  outline: 3px solid color-mix(in srgb, var(--mood-color), transparent 72%);
+  outline-offset: 3px;
+}
+
+.mood-face {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mood-color);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.mood-face::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 13px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 18px 0 0 currentColor;
+}
+
+.mood-face::after {
+  content: "";
+  position: absolute;
+  left: 11px;
+  width: 24px;
+  height: 10px;
+}
+
+.mood-face--1::after,
+.mood-face--2::after {
+  top: 30px;
+  border-top: 2px solid currentColor;
+  border-radius: 50% 50% 0 0;
+}
+
+.mood-face--2::after {
+  top: 29px;
+  height: 7px;
+}
+
+.mood-face--3::after {
+  top: 31px;
+  height: 2px;
+  background: currentColor;
+}
+
+.mood-face--4::after,
+.mood-face--5::after {
+  top: 22px;
+  border-bottom: 2px solid currentColor;
+  border-radius: 0 0 50% 50%;
+}
+
+.mood-face--5::after {
+  height: 12px;
+}
+
+.rating-input input:checked + .rating-option .mood-face {
+  border-color: var(--mood-color);
+  background: var(--mood-color);
+  color: #fff;
+  transform: scale(1.04);
+}
+
+.rating-input small {
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) {
+  .rating-input label:hover .mood-face {
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 720px) {
+  .form-card {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .form-card h2 {
+    margin-bottom: 12px;
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .form-card form {
+    gap: 12px;
+  }
+
+  .form-card input,
+  .form-card textarea {
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .rating-input {
+    gap: 5px;
+    margin-top: 8px;
+    padding: 8px 6px 6px;
+    border-radius: 10px;
+  }
+
+  .rating-input legend {
+    margin-left: 2px;
+    padding: 0 6px;
+  }
+
+  .rating-option {
+    gap: 5px;
+    min-height: 96px;
+    padding: 7px 0;
+  }
+
+  .mood-face {
+    width: 46px;
+    height: 46px;
+  }
+
+  .mood-face::before {
+    left: 11px;
+    top: 12px;
+    width: 5px;
+    height: 5px;
+    box-shadow: 17px 0 0 currentColor;
+  }
+
+  .mood-face::after {
+    left: 10px;
+    width: 22px;
+  }
+
+  .mood-face--1::after,
+  .mood-face--2::after {
+    top: 27px;
+  }
+
+  .mood-face--3::after {
+    top: 29px;
+  }
+
+  .mood-face--4::after,
+  .mood-face--5::after {
+    top: 20px;
+  }
+
+  .rating-input small {
+    font-size: 10px;
+  }
+
+  .form-card .button--primary {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .mood-face {
+    width: 42px;
+    height: 42px;
+  }
+
+  .mood-face::before {
+    left: 9px;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    box-shadow: 16px 0 0 currentColor;
+  }
+
+  .mood-face::after {
+    left: 9px;
+    width: 20px;
+  }
+
+  .mood-face--1::after,
+  .mood-face--2::after {
+    top: 25px;
+  }
+
+  .mood-face--3::after {
+    top: 27px;
+  }
+
+  .mood-face--4::after,
+  .mood-face--5::after {
+    top: 18px;
+  }
+}

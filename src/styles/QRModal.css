@@ -1,0 +1,95 @@
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.42);
+  z-index: 30;
+}
+
+.qr-modal__panel {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(440px, 100%);
+  padding: 30px;
+  background: #fff;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.qr-modal__panel h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.qr-modal__panel p {
+  margin: 0;
+  color: #4a4c47;
+}
+
+.qr-modal__panel img {
+  width: min(260px, 80vw);
+  height: auto;
+  border: 1px solid #d5d6d2;
+}
+
+.qr-modal__panel code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 10px 12px;
+  background: #f5f3ed;
+  border-radius: 10px;
+}
+
+.qr-modal__close {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+@media (max-width: 520px) {
+  .qr-modal {
+    align-items: start;
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  }
+
+  .qr-modal__panel {
+    gap: 9px;
+    max-height: calc(100dvh - 24px);
+    padding: 22px 14px 16px;
+    border-radius: 8px;
+    overflow-y: auto;
+  }
+
+  .qr-modal__panel h2 {
+    max-width: calc(100% - 42px);
+    font-size: 21px;
+    line-height: 1.25;
+  }
+
+  .qr-modal__panel img {
+    width: min(240px, 72vw);
+  }
+
+  .qr-modal__panel code {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  .qr-modal__close {
+    right: 8px;
+    top: 7px;
+    width: 42px;
+    height: 42px;
+  }
+}

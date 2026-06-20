@@ -1,0 +1,17 @@
+{
+  "name": "qr-satisfaction-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.ts",
+    "dev": "node --env-file-if-exists=.env --watch server.ts",
+    "db:migrate:sqlite": "node --env-file-if-exists=.env scripts/migrate-sqlite-to-postgres.ts"
+  },
+  "dependencies": {
+    "pg": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

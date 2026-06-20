@@ -1,0 +1,119 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  min-height: 132px;
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid #d5d6d2;
+  border-radius: 16px;
+}
+
+.stat-card strong {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.stat-card span {
+  font-size: 18px;
+  color: #343632;
+  font-weight: 700;
+}
+
+.stat-card__icon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.stat-card__icon--clipboard {
+  border: 4px solid #386bb1;
+  border-radius: 6px;
+}
+
+.stat-card__icon--clipboard::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: -8px;
+  width: 14px;
+  height: 8px;
+  border: 4px solid #386bb1;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.stat-card__icon--clipboard::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 12px;
+  width: 14px;
+  height: 12px;
+  border-top: 3px solid #386bb1;
+  border-bottom: 3px solid #386bb1;
+}
+
+.stat-card__icon--chat {
+  border: 4px solid #22631c;
+  border-radius: 50%;
+}
+
+.stat-card__icon--chat::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  bottom: -5px;
+  width: 13px;
+  height: 12px;
+  border-left: 4px solid #22631c;
+  transform: rotate(35deg);
+  background: #fff;
+}
+
+.stat-card__icon--star::before {
+  content: "☆";
+  color: #665218;
+  font-size: 38px;
+  line-height: 26px;
+  font-weight: 900;
+}
+
+@media (max-width: 840px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .stat-card {
+    gap: 7px;
+    min-width: 0;
+    min-height: 106px;
+    padding: 12px 10px;
+    border-radius: 8px;
+  }
+
+  .stat-card strong {
+    font-size: 28px;
+  }
+
+  .stat-card span {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .stat-card__icon {
+    width: 24px;
+    height: 24px;
+    transform: scale(0.8);
+    transform-origin: left bottom;
+  }
+}

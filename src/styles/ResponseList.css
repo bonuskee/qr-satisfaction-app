@@ -1,0 +1,157 @@
+.responses-page {
+  min-height: 100vh;
+  padding: 28px 0 36px;
+}
+
+.responses-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 18px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #d0d2cb;
+}
+
+.responses-header__back {
+  margin: 0;
+  min-height: 38px;
+}
+
+.responses-header p {
+  margin: 0 0 5px;
+  color: #3e725a;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.responses-header h1 {
+  margin: 0 0 5px;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.responses-header > div > span {
+  color: #5c5f59;
+}
+
+.responses-summary {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 8px;
+  min-width: 154px;
+  padding: 13px 16px;
+  border: 1px solid #ced5cc;
+  border-radius: 8px;
+  background: #f8faf6;
+}
+
+.responses-summary strong { font-size: 28px; }
+.responses-summary span { color: #51554e; font-size: 13px; }
+.responses-summary b { grid-column: 1 / -1; color: #2e674c; font-size: 13px; }
+
+.responses-table-wrap {
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid #d3d5cf;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.responses-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.responses-table th,
+.responses-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e4e5e1;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.responses-table th {
+  background: #f4f5f1;
+  color: #555850;
+  font-size: 13px;
+}
+
+.responses-table th:nth-child(1) { width: 24%; }
+.responses-table th:nth-child(2) { width: 34%; }
+.responses-table th:nth-child(3) { width: 22%; }
+.responses-table th:nth-child(4) { width: 20%; }
+.responses-table tbody tr:last-child td { border-bottom: 0; }
+
+.response-mood {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+}
+
+.response-mood strong { font-size: 25px; }
+.response-mood--1 { color: #9d302c; }
+.response-mood--2 { color: #bd5a21; }
+.response-mood--3 { color: #94700c; }
+.response-mood--4 { color: #467d29; }
+.response-mood--5 { color: #17663c; }
+
+.response-comment {
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+
+.response-date { color: #5d605a; font-size: 14px; }
+.response-device { display: grid; gap: 2px; color: #3d5146; }
+.response-device strong { font-size: 13px; }
+.response-device small { color: #757a73; font-size: 11px; }
+.muted { color: #969991; }
+
+.responses-empty {
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  min-height: 220px;
+  margin-top: 20px;
+  border: 1px dashed #c8cbc3;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+  color: #656861;
+  text-align: center;
+}
+
+.responses-empty strong { color: #272925; font-size: 20px; }
+
+@media (max-width: 760px) {
+  .responses-page { padding: 16px 0 24px; }
+  .responses-header { grid-template-columns: 1fr; gap: 12px; padding-bottom: 16px; }
+  .responses-header__back { width: max-content; min-height: 42px; padding-inline: 14px; }
+  .responses-header h1 { font-size: 21px; }
+  .responses-summary { width: 100%; padding: 10px 12px; }
+  .responses-summary strong { font-size: 25px; }
+  .responses-table-wrap { margin-top: 16px; border: 0; background: transparent; overflow: visible; }
+  .responses-table, .responses-table tbody, .responses-table tr, .responses-table td { display: block; }
+  .responses-table thead { display: none; }
+  .responses-table tr {
+    margin-bottom: 10px;
+    border: 1px solid #d3d5cf;
+    border-radius: 8px;
+    background: #fff;
+  }
+  .responses-table td { display: grid; grid-template-columns: 98px minmax(0, 1fr); gap: 10px; padding: 11px 12px; border-bottom: 1px solid #e4e5e1; }
+  .responses-table td::before { content: attr(data-label); color: #74776f; font-size: 13px; font-weight: 800; }
+  .responses-table tbody tr:last-child td:not(:last-child) { border-bottom: 1px solid #e4e5e1; }
+  .responses-table tr td:last-child { border-bottom: 0; }
+  .response-mood { gap: 7px; }
+  .response-mood strong { font-size: 22px; }
+  .response-date { font-size: 13px; }
+  .responses-empty { min-height: 160px; margin-top: 16px; padding: 16px; }
+}
+
+@media (max-width: 380px) {
+  .responses-table td {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+}
