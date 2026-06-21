@@ -4,6 +4,7 @@ import { Login } from "./components/Login.ts";
 import { QRModal } from "./components/QRModal.ts";
 import { ResponseList } from "./components/ResponseList.ts";
 import { StatsCards } from "./components/StatsCards.ts";
+import { SummaryCharts } from "./components/SummaryCharts.ts";
 import { SurveyCard } from "./components/SurveyCard.ts";
 import { SurveyForm } from "./components/SurveyForm.ts";
 
@@ -43,6 +44,7 @@ function renderDashboard() {
     <section class="app-shell">
       <div data-header></div>
       <div data-stats></div>
+      <div data-summary-charts></div>
       <section class="survey-list" data-surveys></section>
     </section>
   `;
@@ -59,6 +61,7 @@ function renderDashboard() {
     }
   });
   StatsCards(app.querySelector("[data-stats]"), dashboard.stats);
+  SummaryCharts(app.querySelector("[data-summary-charts]"), dashboard.surveys);
 
   const list = app.querySelector("[data-surveys]");
   dashboard.surveys.forEach((survey) => {
