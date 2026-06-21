@@ -1,10 +1,11 @@
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
-import { createHash, createHmac, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, randomBytes, randomUUID, scrypt, timingSafeEqual } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 import {
   checkDatabaseConnection,
   createSession,
@@ -31,12 +32,14 @@ const rootDir = fileURLToPath(new URL(".", import.meta.url));
 const publicDir = join(rootDir, "src");
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || (process.env.RENDER ? "0.0.0.0" : "127.0.0.1");
+const adminPasswordHash = String(process.env.ADMIN_PASSWORD_HASH || "");
 const adminPassword = String(process.env.ADMIN_PASSWORD || "");
 const deviceHashSecret = String(process.env.DEVICE_HASH_SECRET || "");
 const configuredPublicOrigin = String(process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || "")
   .trim()
   .replace(/\/+$/, "");
 const sessionLifetimeMs = 8 * 60 * 60 * 1000;
+const scryptAsync = promisify(scrypt);
 const loginAttempts = new Map<string, { count: number; resetAt: number }>();
 const responseRates = new Map<string, { count: number; resetAt: number }>();
 
@@ -169,7 +172,16 @@ async function sessionIsValid(req: IncomingMessage) {
   return sessionExists(hashSessionToken(token));
 }
 
-function passwordsMatch(input: string) {
+async function passwordsMatch(input: string) {
+  if (adminPasswordHash) {
+    const [, saltHex, expectedHex] = adminPasswordHash.split("$");
+    const expected = Buffer.from(expectedHex || "", "hex");
+    if (!/^[0-9a-f]{32}$/i.test(saltHex || "") || expected.length !== 64) return false;
+
+    const actual = (await scryptAsync(input, Buffer.from(saltHex, "hex"), expected.length)) as Buffer;
+    return timingSafeEqual(expected, actual);
+  }
+
   const expected = createHash("sha256").update(adminPassword).digest();
   const actual = createHash("sha256").update(input).digest();
   return timingSafeEqual(expected, actual);
@@ -277,7 +289,7 @@ export async function handleApi(req: IncomingMessage, res: ServerResponse, url: 
 
     const body = await readBody(req);
     const password = String(body.password || "").slice(0, 256);
-    if (!passwordsMatch(password)) {
+    if (!(await passwordsMatch(password))) {
       checkRateLimit(loginAttempts, ip, 5, 15 * 60 * 1000);
       sendJson(res, 401, { message: "รหัสผ่านไม่ถูกต้อง" });
       return;
@@ -545,7 +557,10 @@ const socketPath = process.env.SOCKET_PATH;
 if (process.env.NO_LISTEN !== "1") {
   initializeDatabase()
     .then(() => {
-      if (adminPassword.length < 12) throw new Error("ADMIN_PASSWORD must contain at least 12 characters.");
+      const validPasswordHash = /^scrypt\$[0-9a-f]{32}\$[0-9a-f]{128}$/i.test(adminPasswordHash);
+      if (!validPasswordHash && adminPassword.length < 12) {
+        throw new Error("Set a valid ADMIN_PASSWORD_HASH or an ADMIN_PASSWORD with at least 12 characters.");
+      }
       if (deviceHashSecret.length < 32) throw new Error("DEVICE_HASH_SECRET must contain at least 32 characters.");
       applicationServer.listen(socketPath || { port, host }, () => {
         console.log(

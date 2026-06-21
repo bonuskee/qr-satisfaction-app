@@ -24,7 +24,7 @@ cp .env.example .env
 
 ```dotenv
 DATABASE_URL=ลิงก์แบบ pooled จาก Neon
-ADMIN_PASSWORD=รหัสผ่านยาวอย่างน้อย 12 ตัวอักษร
+ADMIN_PASSWORD_HASH=ค่าแฮช scrypt ของรหัสผู้ดูแล
 DEVICE_HASH_SECRET=ข้อความสุ่มยาวอย่างน้อย 32 ตัวอักษร
 HOST=127.0.0.1
 PORT=3000
@@ -37,6 +37,17 @@ npm start
 ```
 
 เปิด `http://localhost:3000` ตารางฐานข้อมูลจะถูกสร้างอัตโนมัติเมื่อเริ่มเซิร์ฟเวอร์
+
+หากต้องการเปลี่ยนรหัสผู้ดูแล ให้สร้างแฮชใหม่โดยไม่ใส่รหัสไว้ในประวัติคำสั่ง:
+
+```bash
+read -s NEW_ADMIN_PASSWORD
+export NEW_ADMIN_PASSWORD
+npm run password:hash
+unset NEW_ADMIN_PASSWORD
+```
+
+นำบรรทัด `ADMIN_PASSWORD_HASH=...` ที่ได้ไปแทนใน `.env` และ Render ส่วนหน้า Login ให้ใช้รหัสจริงที่พิมพ์ตอน `read -s`
 
 ## ย้ายข้อมูลเดิมจาก SQLite ไป Neon
 
@@ -56,7 +67,7 @@ npm run db:migrate:sqlite
 4. เข้า Render แล้วเลือก `New` > `Blueprint`
 5. เชื่อม Repository จาก GitHub
 6. กรอก `DATABASE_URL` ด้วย Pooled connection string จาก Neon
-7. กรอก `ADMIN_PASSWORD` เป็นรหัสใหม่ที่ยาวอย่างน้อย 12 ตัวอักษร
+7. กรอก `ADMIN_PASSWORD_HASH` ด้วยค่าแฮช scrypt จากไฟล์ `.env`
 8. กด Apply เพื่อสร้าง Web Service แบบ Free
 9. รอ Deploy สำเร็จ แล้วเปิด URL รูปแบบ `https://ชื่อบริการ.onrender.com`
 10. ตรวจ `https://ชื่อบริการ.onrender.com/api/health` ต้องแสดง `{"status":"ok"}`
@@ -66,7 +77,7 @@ npm run db:migrate:sqlite
 ## ตัวแปรระบบ
 
 - `DATABASE_URL` Pooled connection string ของ Neon
-- `ADMIN_PASSWORD` รหัสเข้าสู่ Dashboard ขั้นต่ำ 12 ตัวอักษร
+- `ADMIN_PASSWORD_HASH` ค่าแฮช scrypt ของรหัสเข้าสู่ Dashboard
 - `DEVICE_HASH_SECRET` Secret สำหรับแฮชข้อมูลเครือข่าย ขั้นต่ำ 32 ตัวอักษร
 - `PUBLIC_URL` ไม่จำเป็นบน Render แต่ใช้กำหนดโดเมนเองได้
 - `HOST` ใช้ `0.0.0.0` บน Render
